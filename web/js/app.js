@@ -103,7 +103,7 @@ $(document).ready(function() {
                 $.each(allowed_datas, function(key) {
                     tr += sprintf('<td>%s</td>', item[key] ? htmlspecialchars(item[key]) : '');
                 });
-                tr += '<td>' + sprintf(tpl_button, 'edit', item.id, 'Modifier') + sprintf(tpl_button, 'delete', item.id, 'Supprimer') + '</td>';
+                tr += '<td>' + sprintf(tpl_button, 'edit', item.id, '&nbsp;') + sprintf(tpl_button, 'delete', item.id, '&nbsp;') + '</td>';
 
                 var line = $('table > tbody > tr[data-id=' + item.id + ']');
                 if (line.length) {
