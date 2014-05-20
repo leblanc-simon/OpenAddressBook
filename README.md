@@ -1,3 +1,21 @@
+# OpenAddressBook
+
+A very simple address book
+
+## Install
+
+### Dependencies
+
+OpenAddressBook store the datas in [Redis](http://redis.io/). Install it, before.
+
+### Installation
+
+```bash
+git clone https://github.com/leblanc-simon/OpenAddressBook.git
+cd OpenAddressBook
+composer install
+```
+
 ## API
 
 Get all addresses
@@ -17,7 +35,7 @@ GET http://localhost/api/v1/address-books/1.json
 Insert an address
 
 ```bash
-POST -X "name=my-name&phone=+33.3.20.20.20.20" http://localhost/api/v1/address-books
+POST -X "name=my-name&phone=+33.3.20.20.20.20" http://localhost/api/v1/address-books.json
 ```
 
 Update an address
