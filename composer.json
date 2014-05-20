@@ -1,0 +1,26 @@
+{
+    "name": "leblanc-simon/OpenAddressBook",
+    "version": "1.0",
+    "description": "",
+    "authors": [{
+        "name": "Simon Leblanc",
+        "email": "contact@leblanc-simon.eu",
+        "homepage": "http://www.leblanc-simon.fr",
+        "role": "Developer"
+    }],
+    "license": "MIT",
+
+    "type": "application",
+
+    "autoload": {
+        "psr-4": {
+            "OpenAddressBook\\": "src/"
+        }
+    },
+
+    "require": {
+        "php": ">=5.3.2",
+        "silex/silex": "~1.2",
+        "predis/predis": "dev-master"
+    }
+}

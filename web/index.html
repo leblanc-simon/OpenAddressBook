@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>OpenAddressBook</title>
+        <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <header>
+            <h1>OpenAddressBook</h1>
+            <button class="new">Nouveau contact</button>
+        </header>
+        <main>
+            <nav id="menu"></nav>
+
+            <article class="list">
+                    <table class="filterable"><thead><tr></tr></thead><tbody></tbody></table>
+            </article>
+
+            <div class="form hide">
+                <form>
+                    <div class="content"></div>
+                    <div class="button">
+                        <button type="reset">Annuler</button>
+                        <button type="submit">Valider</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            var allowed_datas = {
+                name: {
+                    label: "Nom", type: "text"
+                },
+                phone: {
+                    label: "Téléphone", type: "tel"
+                },
+                portable: {
+                    label: "Portable", type: "tel"
+                },
+                standard: {
+                    label: "Standard", type: "tel"
+                },
+                mail: {
+                    label: "E-mail", type: "email"
+                },
+                role: {
+                    label: "Fonction", type: "text"
+                },
+                customer: {
+                    label: "Client", type: "text"
+                }
+            }
+            var url_all = './api/v1/address-books.json';
+            var url_uniq = './api/v1/address-books/%d.json';
+            var debug = false;
+        </script>
+        <script type="text/javascript" src="js/functions.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/filterTable.js"></script>
+    </body>
+</html>
