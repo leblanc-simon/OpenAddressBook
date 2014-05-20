@@ -119,4 +119,11 @@ $(document).ready(function() {
 
         return false;
     });
+
+    $(document).on('keypress', 'input[type=search]', function(e){
+        if (e.keyCode == 27) { // 27 : ESC
+            $(this).val('');
+            $(this).keyup();
+        }
+    });
 });
