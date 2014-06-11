@@ -1,22 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <title>OpenAddressBook</title>
         <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/tablesaw.css" />
         <link rel="stylesheet" href="css/styles.css" />
     </head>
     <body>
+        <h1>OpenAddressBook</h1>
         <header>
-            <h1>OpenAddressBook</h1>
+            <div id="menu">
+                <i class="icon-search"></i>
+            </div>
             <button class="new">Nouveau contact</button>
         </header>
         <main>
-            <nav id="menu"></nav>
-
             <article class="list">
-                    <table class="filterable"><thead><tr></tr></thead><tbody></tbody></table>
+                    <table class="filterable tablesaw tablesaw-stack" data-mode="stack"><thead><tr></tr></thead><tbody></tbody></table>
             </article>
 
             <div class="form hide">
@@ -30,6 +32,7 @@
             </div>
         </main>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="js/tablesaw.js"></script>
         <script type="text/javascript">
             var allowed_datas = {
                 name: {

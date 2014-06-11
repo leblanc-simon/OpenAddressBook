@@ -20,7 +20,7 @@ $(document).ready(function() {
                 $.each(allowed_datas, function(key) {
                     tr += sprintf('<td>%s</td>', item[key] ? htmlspecialchars(item[key]) : '');
                 });
-                tr += '<td>' + sprintf(tpl_button, 'edit', item.id, '&nbsp;') + sprintf(tpl_button, 'delete', item.id, '&nbsp;') + '</td>';
+                tr += '<td>' + sprintf(tpl_button, 'edit icon-pencil', item.id, '&nbsp;') + sprintf(tpl_button, 'delete icon-remove', item.id, '&nbsp;') + '</td>';
                 tr += '</tr>';
                 tbody.append(tr);
             });
@@ -47,6 +47,7 @@ $(document).ready(function() {
                 $('form .content').html(form);
                 $('form').attr('action', sprintf(url_uniq, item.id));
                 $('.form').removeClass('hide');
+                $('.form input:eq(0)').focus();
                 console.debug(form);
             }
         });
@@ -63,12 +64,17 @@ $(document).ready(function() {
         $('form .content').html(form);
         $('form').attr('action', url_all);
         $('.form').removeClass('hide');
+        $('.form input:eq(0)').focus();
         console.debug(form);
 
         return false;
     });
 
     $(document).on('click', '.delete', function(){
+        if (!confirm('Souhaitez-vous supprimer le contact ?')) {
+            return false;
+        }
+
         var delete_id = $(this).attr('data-id');
         $.ajax({
             url: sprintf(url_uniq, delete_id),
@@ -87,6 +93,7 @@ $(document).ready(function() {
     $(document).on('click', 'button[type=reset]', function(){
         $('.form').addClass('hide');
         $('form .content').html('');
+        $('input[type=search]').focus();
         return false;
     });
 
@@ -103,7 +110,7 @@ $(document).ready(function() {
                 $.each(allowed_datas, function(key) {
                     tr += sprintf('<td>%s</td>', item[key] ? htmlspecialchars(item[key]) : '');
                 });
-                tr += '<td>' + sprintf(tpl_button, 'edit', item.id, '&nbsp;') + sprintf(tpl_button, 'delete', item.id, '&nbsp;') + '</td>';
+                tr += '<td>' + sprintf(tpl_button, 'edit icon-pencil', item.id, '&nbsp;') + sprintf(tpl_button, 'delete icon-remove', item.id, '&nbsp;') + '</td>';
 
                 var line = $('table > tbody > tr[data-id=' + item.id + ']');
                 if (line.length) {
@@ -114,16 +121,26 @@ $(document).ready(function() {
 
                 $('.form').addClass('hide');
                 $('form .content').html('');
+                $('input[type=search]').focus();
             }
         });
 
         return false;
     });
 
+    // Escape : clear search
     $(document).on('keypress', 'input[type=search]', function(e){
         if (e.keyCode == 27) { // 27 : ESC
             $(this).val('');
             $(this).keyup();
+        }
+    });
+
+    // Ctrl + F or F3 : set focus to the search input
+    $(document).on('keydown', function(e){
+        if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+            $('input[type=search]').focus();
+            return false;
         }
     });
 });

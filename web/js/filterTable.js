@@ -94,6 +94,17 @@ function create_node(child) {
 	return node;
 }
 
+function hasClass(el, selector) {
+    var className = " " + selector + " ";
+
+    if ((" " + el.className + " ").replace(/[\n\t]/g, " ").indexOf(className) > -1) {
+        return true;
+    }
+
+
+    return false;
+}
+
 
 
 /*
@@ -105,7 +116,7 @@ for (var t = 0; t < tables.length; t++) {
 	element = tables[t];
 
 	if (element.attributes['class']
-		&& element.attributes['class'].value == 'filterable') {
+		&& hasClass(element, 'filterable')) {
 
 		/* Here is dynamically created a form */
 		var form = document.createElement('form');
