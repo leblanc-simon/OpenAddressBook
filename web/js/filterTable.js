@@ -11,7 +11,7 @@ function filterTable(term, table) {
 	for (var r = 1; r < table.rows.length; r++) {
 		var display = '';
 		for (var i = 0; i < terms.length; i++) {
-			if (table.rows[r].innerHTML.replace(/<[^>]+>/g, "").replace(/&amp;/g,'&').toLowerCase()
+			if (table.rows[r].innerHTML.replace(/<\/td>/g, ' ').replace(/<[^>]+>/g, "").replace(/&amp;/g,'&').toLowerCase()
 				.indexOf(terms[i]) < 0) {
 				display = 'none';
 			} else {
@@ -37,7 +37,7 @@ function dehighlight(container) {
 			&& node.attributes['class'].value == 'highlighted') {
 			node.parentNode.parentNode.replaceChild(
 					document.createTextNode(
-						node.parentNode.innerHTML.replace(/<[^>]+>/g, "").replace(/&amp;/g,'&')),
+						node.parentNode.innerHTML.replace(/<\/td>/g, ' ').replace(/<[^>]+>/g, "").replace(/&amp;/g,'&')),
 					node.parentNode);
 			// Stop here and process next parent
 			return;
