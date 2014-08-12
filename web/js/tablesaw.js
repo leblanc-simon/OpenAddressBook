@@ -91,7 +91,6 @@
 
 	Table.prototype.createToolbar = function() {
 		// Insert the toolbar
-		// TODO move this into a separate component
 		var $toolbar = this.$table.prev( '.' + classes.toolbar );
 		if( !$toolbar.length ) {
 			$toolbar = $( '<div>' )
@@ -352,7 +351,6 @@
 			columnBtnSide: this.$table.attr( 'data-column-btn-side' ) || 'right',
 			popup: 'tablesaw-columntoggle-popup',
 			priorityPrefix: 'tablesaw-priority-',
-			// TODO duplicate class, also in tables.js
 			toolbar: 'tablesaw-bar'
 		};
 
