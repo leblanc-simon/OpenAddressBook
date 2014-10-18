@@ -1,0 +1,16 @@
+click2call:
+    class: \OpenAddressBook\Click2Call\Ovh
+
+    parameters:
+        nic_handle: 
+        password: 
+
+    directory:
+        "slug1":
+            name: Jean Dupond
+            internal: "09XXXXXXXX"
+            external: "03XXXXXXXX"
+        "slug2":
+            name: Jeanne Duponne
+            internal: "03XXXXXXXX"
+            external: "03XXXXXXXX"

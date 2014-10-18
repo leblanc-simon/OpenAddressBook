@@ -5,6 +5,7 @@
  * http://www.wtfpl.net/ for more details. */
 
 var tpl_button = '<button class="%s" data-id="%d">%s</button>';
+var tpl_callers = '<option value="%s"%s>%s</option>';
 
 $(document).ready(function() {
     $.ajax({
@@ -17,15 +18,48 @@ $(document).ready(function() {
             $.each(datas, function(iterator, item) {
                 console.debug(item);
                 var tr = '<tr data-id="' + item.id + '">';
-                $.each(allowed_datas, function(key) {
-                    tr += sprintf('<td>%s</td>', item[key] ? htmlspecialchars(item[key]) : '');
+
+                $.each(allowed_datas, function(key, value) {
+                    var icon = '';
+                    if (click2call_enable === true && value.type === 'tel' && item[key]) {
+                        icon = '<i class="phone" data-tel="' + convertToTel(item[key]) + '"></i>';
+                    }
+
+                    tr += sprintf('<td class="%s">%s</td>', value.type, item[key] ? htmlspecialchars(item[key]) + icon : '');
                 });
                 tr += '<td>' + sprintf(tpl_button, 'edit icon-pencil', item.id, '&nbsp;') + sprintf(tpl_button, 'delete icon-remove', item.id, '&nbsp;') + '</td>';
                 tr += '</tr>';
                 tbody.append(tr);
             });
+
+            if (click2call_enable === true) {
+                $('select[name=callers]').trigger('change');
+            }
         }
     });
+
+    if (click2call_enable === true) {
+        $.ajax({
+            url: url_callers,
+            type: 'GET',
+            dataType: 'json',
+            success: function(datas) {
+                var keys = Object.getOwnPropertyNames(datas);
+                var callers = '';
+                var save_caller = readCookie('open-address-book-caller');
+                $.each(keys, function(iterator, item) {
+                    var selected = '';
+                    if (save_caller === item) {
+                        selected = ' selected="selected"';
+                    }
+                    callers += sprintf(tpl_callers, item, selected, datas[item].name);
+                });
+
+                $('.callers').append('<select name="callers"><option></option>' + callers + '</select>');
+                $('select[name=callers]').trigger('change');
+            }
+        });
+    }
 
     thead_tr = $('table > thead > tr:first-child');
     $.each(allowed_datas, function(key, value) {
@@ -107,9 +141,16 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(item) {
                 var tr = '';
-                $.each(allowed_datas, function(key) {
-                    tr += sprintf('<td>%s</td>', item[key] ? htmlspecialchars(item[key]) : '');
+
+                $.each(allowed_datas, function(key, value) {
+                    var icon = '';
+                    if (click2call_enable === true && value.type === 'tel' && item[key]) {
+                        icon = '<i class="phone" data-tel="' + convertToTel(item[key]) + '"></i>';
+                    }
+
+                    tr += sprintf('<td class="%s">%s</td>', value.type, item[key] ? htmlspecialchars(item[key]) + icon : '');
                 });
+
                 tr += '<td>' + sprintf(tpl_button, 'edit icon-pencil', item.id, '&nbsp;') + sprintf(tpl_button, 'delete icon-remove', item.id, '&nbsp;') + '</td>';
 
                 var line = $('table > tbody > tr[data-id=' + item.id + ']');
@@ -122,6 +163,10 @@ $(document).ready(function() {
                 $('.form').addClass('hide');
                 $('form .content').html('');
                 $('input[type=search]').focus();
+
+                if (click2call_enable === true) {
+                    $('select[name=callers]').trigger('change');
+                }
             }
         });
 
@@ -143,4 +188,28 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    // Click2Call
+    if (click2call_enable === true) {
+        $(document).on('change', 'select[name=callers]', function(){
+            createCookie('open-address-book-caller', $(this).val());
+            if ($(this).val() === '') {
+                disableClick2Call();
+            } else {
+                enableClick2Call();
+            }
+        });
+
+        $(document).on('click', '.phone', function(){
+            $.ajax({
+                url: sprintf(url_call, $('select[name=callers]').val(), $(this).attr('data-tel')),
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.debug(data);
+                }
+            });
+            return false;
+        });
+    }
 });
