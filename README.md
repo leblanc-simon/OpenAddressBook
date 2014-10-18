@@ -16,6 +16,15 @@ cd OpenAddressBook
 composer install
 ```
 
+If you want use the click2call, copy ```config/click2call.yml.dist``` to ```config/click2call.yml```,
+configure it and activate click2call into the ```web/index.html``` (set click2call_enable to true)
+
+### Click2Call
+
+Click2Call is available for Ovh, if you have an other provider, create a class implements
+\OpenAddressBook\Click2Call\Click2CallInterface and change the class name into the ```config/click2call.yml```
+file
+
 ## API
 
 Get all addresses

@@ -8,6 +8,7 @@
 namespace OpenAddressBook;
 
 use OpenAddressBook\Controller\AddressBook;
+use OpenAddressBook\Controller\Click2Call;
 use Silex\Application;
 
 class Dispatcher
@@ -30,6 +31,7 @@ class Dispatcher
         $this->loadShow();
         $this->loadSave();
         $this->loadDelete();
+        $this->loadCall();
     }
 
 
@@ -83,6 +85,26 @@ class Dispatcher
             })
             ->convert('id', function ($id) { return (int) $id; })
             ->assert('id', '\d+')
+        ;
+    }
+
+
+    private function loadCall()
+    {
+        $this->application
+            ->get('/api/'.$this->version.'/click2call.json', function (Application $application) {
+                $controller = new Click2Call($application);
+
+                return $controller->getAll();
+            })
+        ;
+
+        $this->application
+            ->get('/api/'.$this->version.'/click2call/call/{name}/{phone}', function (Application $application, $name, $phone) {
+                $controller = new Click2Call($application);
+
+                return $controller->call($name, $phone);
+            })
         ;
     }
 }
