@@ -8,7 +8,6 @@
 namespace OpenAddressBook\Controller;
 
 use OpenAddressBook\Click2Call\Click2CallInterface;
-use Silex\Application;
 use Symfony\Component\Yaml\Parser;
 
 class Click2Call extends Controller
