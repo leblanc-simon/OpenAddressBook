@@ -59,6 +59,24 @@ $(document).ready(function() {
                 $('select[name=callers]').trigger('change');
             }
         });
+
+        // Add custom phone to call
+        var input_custom_tel = document.createElement('input');
+        input_custom_tel.setAttribute('type', 'text');
+        input_custom_tel.setAttribute('placeholder', 'Appeler');
+        var submit_custom_tel = document.createElement('i');
+        submit_custom_tel.setAttribute('class', 'custom-phone phone');
+        if (window.mozInnerScreenX !== undefined) {
+            // it's Firefox : fix position (yes, it's crap !)
+            submit_custom_tel.setAttribute('style', 'top: 7px;');
+        }
+        var menu = document.getElementById('custom-call');
+        menu.appendChild(input_custom_tel);
+        menu.appendChild(submit_custom_tel);
+
+        // autoselect text on focus
+        $(input_custom_tel).on('focus', function() { $(this).select(); });
+        $(input_custom_tel).on('mouseup', function() { return false; });
     }
 
     thead_tr = $('table > thead > tr:first-child');
@@ -200,15 +218,43 @@ $(document).ready(function() {
             }
         });
 
+        $(document).on('paste', '#custom-call input', function(){
+            setTimeout(function(){
+                $('.custom-phone').trigger('click');
+            }, 0);
+        });
+
+        var clear_custom_phone = false;
+        $(document).on('click', '.custom-phone', function(){
+            var phone_number = document.getElementById('custom-call').getElementsByTagName('input')[0].value;
+            phone_number = convertToTel(phone_number);
+            if (!phone_number) {
+                return false;
+            }
+
+            $(this).attr('data-tel', phone_number);
+            clear_custom_phone = true;
+
+            return true;
+        });
+
         $(document).on('click', '.phone', function(){
+            var tel = $(this).attr('data-tel');
+            if ($.trim(tel) === '') {
+                return false;
+            }
+
             $.ajax({
-                url: sprintf(url_call, $('select[name=callers]').val(), $(this).attr('data-tel')),
+                url: sprintf(url_call, $('select[name=callers]').val(), tel),
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     console.debug(data);
                 }
             });
+            if (true === clear_custom_phone) {
+                $('.custom-phone').removeAttr('data-tel');
+            }
             return false;
         });
     }

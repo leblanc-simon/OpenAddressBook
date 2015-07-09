@@ -43,11 +43,13 @@ function readCookie(name)
 function enableClick2Call()
 {
     $('.phone').removeClass('hide');
+    $('#custom-call').removeClass('hide');
 }
 
 function disableClick2Call()
 {
     $('.phone').addClass('hide');
+    $('#custom-call').addClass('hide');
 }
 
 function convertToTel(tel)

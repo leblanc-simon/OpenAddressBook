@@ -7,10 +7,13 @@
         <link rel="stylesheet" href="css/reset.css" />
         <link rel="stylesheet" href="css/tablesaw.css" />
         <link rel="stylesheet" href="css/styles.css" />
+        <link rel="icon" type="image/png" href="favicon.png">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     </head>
     <body>
         <h1>
             OpenAddressBook
+            <span id="custom-call"></span>
             <span class="callers"></span>
         </h1>
         <header>
@@ -34,7 +37,7 @@
                 </form>
             </div>
         </main>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="js/tablesaw.js"></script>
         <script type="text/javascript">
             var allowed_datas = {
@@ -62,7 +65,7 @@
             }
             var url_all = './api/v1/address-books.json';
             var url_uniq = './api/v1/address-books/%d.json';
-            var click2call_enable = false;
+            var click2call_enable = true;
             var url_callers = './api/v1/click2call.json';
             var url_call = './api/v1/click2call/call/%s/%s';
             var debug = false;
