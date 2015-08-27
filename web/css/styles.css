@@ -285,7 +285,17 @@ table tbody tr:hover {
 
 .highlighted { background: yellow; }
 
-
+#error {
+    color: #a94442;
+    background-color: #f2dede;
+    padding: 15px;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
 
 [class^="icon-"], [class*=" icon-"] {
     font-family: 'icomoon';

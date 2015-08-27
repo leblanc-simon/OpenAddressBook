@@ -256,6 +256,13 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data) {
                     console.debug(data);
+                },
+                error: function() {
+                    $('#error').slideDown('slow', function(){
+                        setTimeout(function(){
+                            $('#error').slideUp('slow');
+                        }, 2500);
+                    });
                 }
             });
             if (true === clear_custom_phone) {
