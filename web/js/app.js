@@ -224,6 +224,12 @@ $(document).ready(function() {
             }, 0);
         });
 
+        $(document).on('keypress', '#custom-call input', function(e){
+            if (e.keyCode === 13) { // Enter
+                $('.custom-phone').trigger('click');
+            }
+        });
+
         var clear_custom_phone = false;
         $(document).on('click', '.custom-phone', function(){
             var phone_number = document.getElementById('custom-call').getElementsByTagName('input')[0].value;
