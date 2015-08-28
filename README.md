@@ -25,6 +25,29 @@ Click2Call is available for Ovh, if you have an other provider, create a class i
 \OpenAddressBook\Click2Call\Click2CallInterface and change the class name into the ```config/click2call.yml```
 file
 
+### Connect to an external source
+
+You can connect OpenAddressBook to an external source. Now, a connector for Odoo already exist.
+
+To connect OpenAddressBook and Odoo
+
+* copy and edit ```config/command.yml.dist``` to ```config/command.yml```
+* copy and edit ```config/odoo.yml.dist``` to ```config/odoo.yml```
+* run ```bin/console address:retrieve```
+
+You can add the command ```bin/console address:retrieve``` into a cronjob to update the database periodically.
+
+To connect OpenAddressBook and another external source
+
+* create a connector class which implements ```\OpenAddressBook\Connector\ConnectorInterface```
+* create a item class which implements ```\OpenAddressBook\Connector\ItemInterface```
+* copy ```config/command.yml.dist``` to ```config/command.yml```
+* edit ```config/command.yml``` to indicate your class into the ```connector``` parameter and edit ```options``` parameters
+
+You can show the ```\OpenAddressBook\Connector\Odoo\Connector``` and ```\OpenAddressBook\Connector\Odoo\Item``` 
+classes for inspiration.
+
+
 ## API
 
 Get all addresses

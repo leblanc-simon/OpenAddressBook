@@ -1,0 +1,6 @@
+odoo:
+    server: https://odoo.example.org
+    port: 443
+    database: odoo
+    username: admin
+    password: admin
