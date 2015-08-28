@@ -24,8 +24,14 @@ $(document).ready(function() {
                     if (click2call_enable === true && value.type === 'tel' && item[key]) {
                         icon = '<i class="phone" data-tel="' + convertToTel(item[key]) + '"></i>';
                     }
+                    
+                    if (value.type === 'email' && item[key]) {
+                        tr += sprintf('<td class="%s"><a href="mailto:%s">%s</a></td>', value.type, item[key], item[key]);
+                    } else {
+                        tr += sprintf('<td class="%s">%s</td>', value.type, item[key] ? htmlspecialchars(item[key]) + icon : '');
+                    }
 
-                    tr += sprintf('<td class="%s">%s</td>', value.type, item[key] ? htmlspecialchars(item[key]) + icon : '');
+                
                 });
                 tr += '<td>' + sprintf(tpl_button, 'edit icon-pencil', item.id, '&nbsp;') + sprintf(tpl_button, 'delete icon-remove', item.id, '&nbsp;') + '</td>';
                 tr += '</tr>';
