@@ -26,7 +26,7 @@ $(document).ready(function() {
                     }
                     
                     if (value.type === 'email' && item[key]) {
-                        tr += sprintf('<td class="%s"><a href="mailto:%s">%s</a></td>', value.type, item[key] ? htmlspecialchars(item[key]) : '', item[key] ? htmlspecialchars(item[key]) : '');
+                        tr += sprintf('<td class="%s"><a href="mailto:%s">%s</a></td>', value.type, htmlspecialchars(item[key]),htmlspecialchars(item[key]));
                     } else {
                         tr += sprintf('<td class="%s">%s</td>', value.type, item[key] ? htmlspecialchars(item[key]) + icon : '');
                     }
