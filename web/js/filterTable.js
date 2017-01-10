@@ -5,30 +5,30 @@
  * See also http://www.vonloesch.de/node/23
  */
 function filterTable(term, table) {
-	dehighlight(table);
-	var terms = term.value.toLowerCase().split(" ");
+    dehighlight(table);
+    var terms = term.value.toLowerCase().split(" ");
 
-	for (var r = 1; r < table.rows.length; r++) {
-		var display = '';
-		var search_term = '';
-		var index;
-		for (var i = 0; i < terms.length; i++) {
+    for (var r = 1; r < table.rows.length; r++) {
+        var display = '';
+        var search_term = '';
+        var index;
+        for (var i = 0; i < terms.length; i++) {
             search_term = createAccentRegexp(terms[i]);
             index = table.rows[r].innerHTML
-				.replace(/<\/td>/g, ' ')
-				.replace(/<[^>]+>/g, "")
-				.replace(/&amp;/g,'&')
+                .replace(/<\/td>/g, ' ')
+                .replace(/<[^>]+>/g, "")
+                .replace(/&amp;/g,'&')
                 .search(search_term)
-			;
+            ;
 
-			if (index < 0) {
-				display = 'none';
-			} else {
-				if (terms[i].length) highlight(terms[i], search_term, table.rows[r]);
-			}
-			table.rows[r].style.display = display;
-		}
-	}
+            if (index < 0) {
+                display = 'none';
+            } else {
+                if (terms[i].length) highlight(terms[i], search_term, table.rows[r]);
+            }
+            table.rows[r].style.display = display;
+        }
+    }
 }
 
 
@@ -39,22 +39,22 @@ function filterTable(term, table) {
  * preText term postText
  */
 function dehighlight(container) {
-	for (var i = 0; i < container.childNodes.length; i++) {
-		var node = container.childNodes[i];
+    for (var i = 0; i < container.childNodes.length; i++) {
+        var node = container.childNodes[i];
 
-		if (node.attributes && node.attributes['class']
-			&& node.attributes['class'].value == 'highlighted') {
-			node.parentNode.parentNode.replaceChild(
-					document.createTextNode(
-						node.parentNode.innerHTML.replace(/<\/td>/g, ' ').replace(/<[^>]+>/g, "").replace(/&amp;/g,'&')),
-					node.parentNode);
-			// Stop here and process next parent
-			return;
-		} else if (node.nodeType != 3) {
-			// Keep going onto other elements
-			dehighlight(node);
-		}
-	}
+        if (node.attributes && node.attributes['class']
+            && node.attributes['class'].value == 'highlighted') {
+            node.parentNode.parentNode.replaceChild(
+                document.createTextNode(
+                    node.parentNode.innerHTML.replace(/<\/td>/g, ' ').replace(/<[^>]+>/g, "").replace(/&amp;/g,'&')),
+                node.parentNode);
+            // Stop here and process next parent
+            return;
+        } else if (node.nodeType != 3) {
+            // Keep going onto other elements
+            dehighlight(node);
+        }
+    }
 }
 
 /*
@@ -63,44 +63,44 @@ function dehighlight(container) {
  * around each search term
  */
 function highlight(term, search_term, container) {
-	for (var i = 0; i < container.childNodes.length; i++) {
-		var node = container.childNodes[i];
+    for (var i = 0; i < container.childNodes.length; i++) {
+        var node = container.childNodes[i];
 
-		if (node.nodeType == 3) {
-			// Text node
-			var data = node.data;
-			var data_low = data.toLowerCase();
-			if (data_low.search(search_term) >= 0) {
-				//term found!
-				var new_node = document.createElement('span');
+        if (node.nodeType == 3) {
+            // Text node
+            var data = node.data;
+            var data_low = data.toLowerCase();
+            if (data_low.search(search_term) >= 0) {
+                //term found!
+                var new_node = document.createElement('span');
 
-				node.parentNode.replaceChild(new_node, node);
+                node.parentNode.replaceChild(new_node, node);
 
-				var result;
-				while ((result = data_low.search(search_term)) != -1) {
-					new_node.appendChild(document.createTextNode(
-								data.substr(0, result)));
-					new_node.appendChild(create_node(
-								document.createTextNode(data.substr(
-										result, term.length))));
-					data = data.substr(result + term.length);
-					data_low = data_low.substr(result + term.length);
-				}
-				new_node.appendChild(document.createTextNode(data));
-			}
-		} else {
-			// Keep going onto other elements
-			highlight(term, search_term, node);
-		}
-	}
+                var result;
+                while ((result = data_low.search(search_term)) != -1) {
+                    new_node.appendChild(document.createTextNode(
+                        data.substr(0, result)));
+                    new_node.appendChild(create_node(
+                        document.createTextNode(data.substr(
+                            result, term.length))));
+                    data = data.substr(result + term.length);
+                    data_low = data_low.substr(result + term.length);
+                }
+                new_node.appendChild(document.createTextNode(data));
+            }
+        } else {
+            // Keep going onto other elements
+            highlight(term, search_term, node);
+        }
+    }
 }
 
 function create_node(child) {
-	var node = document.createElement('span');
-	node.setAttribute('class', 'highlighted');
-	node.attributes['class'].value = 'highlighted';
-	node.appendChild(child);
-	return node;
+    var node = document.createElement('span');
+    node.setAttribute('class', 'highlighted');
+    node.attributes['class'].value = 'highlighted';
+    node.appendChild(child);
+    return node;
 }
 
 function hasClass(el, selector) {
@@ -158,27 +158,27 @@ function deaccent(accentedString) {
  */
 tables = document.getElementsByTagName('table');
 for (var t = 0; t < tables.length; t++) {
-	element = tables[t];
+    element = tables[t];
 
-	if (element.attributes['class']
-		&& hasClass(element, 'filterable')) {
+    if (element.attributes['class']
+        && hasClass(element, 'filterable')) {
 
-		/* Here is dynamically created a form */
-		var form = document.createElement('form');
-		form.setAttribute('class', 'filter');
-		// For ie...
-		form.attributes['class'].value = 'filter';
-		var input = document.createElement('input');
+        /* Here is dynamically created a form */
+        var form = document.createElement('form');
+        form.setAttribute('class', 'filter');
+        // For ie...
+        form.attributes['class'].value = 'filter';
+        var input = document.createElement('input');
         input.setAttribute('type', 'search');
         input.setAttribute('autofocus', 'autofocus');
         input.setAttribute('placeholder', 'Rechercher');
-		input.onkeyup = function() {
-			filterTable(input, element);
-		}
-		form.appendChild(input);
-		//element.parentNode.insertBefore(form, element);
+        input.onkeyup = function() {
+            filterTable(input, element);
+        }
+        form.appendChild(input);
+        //element.parentNode.insertBefore(form, element);
         document.getElementById('menu').appendChild(form);
-	}
+    }
 }
 
 /*
