@@ -36,8 +36,12 @@ class OpenAddressBook
 
     private function configure()
     {
-        $this->application['database'] = $this->application->share(function() {
+        $this->application['database'] = function() {
             return new Database();
+        };
+
+        $this->application['request'] = $this->application->factory(function ($app) {
+            return $app['request_stack']->getCurrentRequest();
         });
 
         $dispatcher = new Dispatcher($this->application);
