@@ -7,7 +7,7 @@
         "homepage": "http://www.leblanc-simon.fr",
         "role": "Developer"
     }],
-    "license": "MIT",
+    "license": "WTFPL",
 
     "type": "application",
 
@@ -18,11 +18,12 @@
     },
 
     "require": {
-        "php": ">=5.4",
-        "silex/silex": "~1.3",
-        "predis/predis": "~1",
-        "symfony/yaml": "~2.7",
+        "php": ">=5.5.9",
+        "silex/silex": "^2.0",
+        "predis/predis": "^1.1",
+        "symfony/yaml": "^3.0",
         "symfony/console": "~2.7",
-        "leblanc-simon/openerpbyjsonrpc": "^0.0.9"
+        "leblanc-simon/openerpbyjsonrpc": "^1.0",
+        "roave/security-advisories": "dev-master"
     }
 }
