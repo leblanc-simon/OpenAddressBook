@@ -10,14 +10,33 @@ OpenAddressBook store the datas in [Redis](http://redis.io/). Install it, before
 
 ### Installation
 
+#### Install project
 ```bash
 git clone https://github.com/leblanc-simon/OpenAddressBook.git
 cd OpenAddressBook
 composer install
+cp web/js/config.js.dist web/js/config.js
 ```
 
+#### Configure webserver
+
+Configure your webserver to redirect all nonexistent files to web/api.php.
+Example of .htaccess file :
+
+```bash
+DirectoryIndex index.html
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/$
+RewriteRule ^(.*)$ api.php [QSA,L]
+```
+
+#### Configure application
+
 If you want use the click2call, copy ```config/click2call.yml.dist``` to ```config/click2call.yml```,
-configure it and activate click2call into the ```web/index.html``` (set click2call_enable to true)
+configure it and activate click2call into the ```web/js/config.js``` (set click2call_enable to true)
 
 ### Click2Call
 
