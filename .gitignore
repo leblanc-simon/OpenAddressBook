@@ -2,3 +2,5 @@
 /config/command.yml
 /config/odoo.yml
 /vendor
+/web/js/config.js
+/web/.htaccess
