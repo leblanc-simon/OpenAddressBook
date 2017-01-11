@@ -1,0 +1,7 @@
+command:
+    connector: \OpenAddressBook\Connector\Odoo\Connector
+    options:
+        settings_file: odoo.yml
+
+    # Blacklist import identifier
+    blacklist: []

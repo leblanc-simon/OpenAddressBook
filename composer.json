@@ -22,6 +22,8 @@
         "silex/silex": "^2.0",
         "predis/predis": "^1.1",
         "symfony/yaml": "^3.0",
+        "symfony/console": "^3.0",
+        "leblanc-simon/openerpbyjsonrpc": "^1.0",
         "roave/security-advisories": "dev-master"
     }
 }
