@@ -7,6 +7,19 @@
 var tpl_button = '<button class="%s" data-id="%d">%s</button>';
 var tpl_callers = '<option value="%s"%s>%s</option>';
 
+if ((window.location.hostname || window.location.protocol === 'https:') && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-workers.js', { scope: './' })
+        .then(function(reg) {
+            console.debug('Registration succeeded. Scope is ' + reg.scope);
+        })
+        .catch(function(error) {
+            console.debug('Registration failed with ' + error);
+        })
+    ;
+} else {
+    console.debug('serviceWorker is not available...');
+}
+
 $(document).ready(function() {
     $.ajax({
         url: url_all,
