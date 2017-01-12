@@ -1,6 +1,6 @@
 # OpenAddressBook
 
-A very simple address book
+A very simple address book with offline support
 
 ## Install
 
