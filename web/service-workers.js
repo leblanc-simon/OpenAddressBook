@@ -36,7 +36,6 @@ this.addEventListener('install', function(event) {
     );
 });
 
-
 // call service workers while fetch resource
 this.addEventListener('fetch', function(event) {
     var url = new URL(event.request.url);
@@ -72,6 +71,26 @@ this.addEventListener('fetch', function(event) {
             })
             .catch(function() {
                 return fetch(event.request);
+            })
+    );
+});
+
+// Activation of service workers
+this.addEventListener('activate', function (event) {
+    // clear old cache
+    event.waitUntil(
+        caches
+            .keys()
+            .then(function (keys) {
+                return Promise.all(
+                    keys
+                        .filter(function (key) {
+                            return key !== CACHE_NAME;
+                        })
+                        .map(function (key) {
+                            return caches.delete(key);
+                        })
+                );
             })
     );
 });
