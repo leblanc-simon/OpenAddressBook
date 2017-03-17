@@ -12,56 +12,40 @@
     </head>
     <body>
         <h1>
-            OpenAddressBook
-            <span id="custom-call"></span>
-            <span class="callers"></span>
+            Moteur SpiceWorks parce que quand c'est pas libre ça pue
         </h1>
         <header>
             <div id="menu">
                 <i class="icon-search"></i>
             </div>
-            <button class="new">Nouveau contact</button>
         </header>
         <main>
             <article class="list">
-                    <table class="filterable tablesaw tablesaw-stack" data-mode="stack"><thead><tr></tr></thead><tbody></tbody></table>
+                    <table class="filterable tablesaw tablesaw-stack" data-mode="stack" id="material"><thead><tr></tr></thead><tbody></tbody></table>
             </article>
-
-            <div class="form hide">
-                <form>
-                    <div class="content"></div>
-                    <div class="button">
-                        <button type="reset">Annuler</button>
-                        <button type="submit">Valider</button>
-                    </div>
-                </form>
-            </div>
         </main>
         <div id="error">&Eacute;chec du lancement de l'appel t&eacute;l&eacute;phonique</div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="js/tablesaw.js"></script>
         <script type="text/javascript">
             var allowed_datas = {
+                tag: {
+                    label: "Tag", type: "text"
+                },
+                domain: {
+                    label: "Domaine", type: "text"
+                },
                 name: {
-                    label: "Nom", type: "text"
+                    label: "Nom du PC", type: "text"
                 },
-                phone: {
-                    label: "Téléphone", type: "tel"
+                last_user: {
+                    label: "Dernier utilisateur", type: "text"
                 },
-                portable: {
-                    label: "Portable", type: "tel"
+                last_logon: {
+                    label: "Date de dernière connexion", type: "date"
                 },
-                standard: {
-                    label: "Standard", type: "tel"
-                },
-                mail: {
-                    label: "E-mail", type: "email"
-                },
-                role: {
-                    label: "Fonction", type: "text"
-                },
-                customer: {
-                    label: "Client", type: "text"
+                id: {
+                    label: "Lien SpiceWorks", type: "link"
                 }
             };
             var url_all = './api/v1/address-books.json';
@@ -71,7 +55,8 @@
         </script>
         <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/functions.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/tablesort.js"></script>
         <script type="text/javascript" src="js/filterTable.js"></script>
+        <script type="text/javascript" src="js/app.js" defer></script>
     </body>
 </html>

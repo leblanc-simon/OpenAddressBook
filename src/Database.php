@@ -63,14 +63,15 @@ class Database
 
     public function getAll()
     {
-        $ids = $this->client->lrange('OpenAddressBook-'.$this->object_name.'-ids', 0, -1);
-        if (false === is_array($ids)) {
-            return [];
-        }
+        $keys = $this->client->keys('NotOpenAddressBook-*');
 
         $objects = [];
-        foreach ($ids as $id) {
-            $object = $this->useObjectId($id)->get();
+        foreach ($keys as $key) {
+            $parts = explode('_', $key);
+            if (count($parts) !== 2 || is_numeric($parts[1]) === false) {
+                continue;
+            }
+            $object = $this->useObjectId($parts[1])->get();
             if (true === is_array($object) && false === empty($object)) {
                 $objects[] = $object;
             }
@@ -98,13 +99,13 @@ class Database
             throw new \Exception('id and name must be initialize');
         }
 
-        return 'OpenAddressBook-'.$this->object_name.'_'.$this->object_id;
+        return 'NotOpenAddressBook-'.$this->object_name.'_'.$this->object_id;
     }
 
 
     private function reserveNextId()
     {
-        $key = 'OpenAddressBook-'.$this->object_name.'-id';
+        $key = 'NotOpenAddressBook-'.$this->object_name.'-id';
         $id = $this->client->incr($key);
 
         $this->client->rpush($key.'s', $id);

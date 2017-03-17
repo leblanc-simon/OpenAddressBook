@@ -37,6 +37,20 @@ a[href^=mailto]:hover {
     border-bottom: 1px dashed #000;
 }
 
+.date span {
+    display: none;
+}
+
+th.asc:before {
+    content: "⯅";
+    padding-right: 5px;
+}
+
+th.dsc:before {
+    content: "⯆";
+    padding-right: 5px;
+}
+
 .callers select {
     float: right;
     margin-right: 5px;

@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /* This program is free software. It comes without any warranty, to
  * the extent permitted by applicable law. You can redistribute it
@@ -6,11 +5,19 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
-require_once dirname(__DIR__).'/vendor/autoload.php';
+namespace OpenAddressBook\Connector;
 
-use Symfony\Component\Console\Application;
-use OpenAddressBook\Command\RetrieveSpiceworksCommand;
+interface ConnectorSpiceworksInterface
+{
+    /**
+     * @param array $options
+     */
+    public function __construct(array $options = []);
 
-$application = new Application();
-$application->add(new RetrieveSpiceworksCommand());
-$application->run();
+    /**
+     * Return the list of items to import
+     *
+     * @return ItemSpiceworksInterface[]
+     */
+    public function getItems();
+}

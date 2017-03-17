@@ -16,7 +16,7 @@ class AddressBook extends Controller
     {
         parent::__construct($application);
 
-        $this->database->useObjectName('address-book');
+        $this->database->useObjectName('not-address-book');
     }
 
 
