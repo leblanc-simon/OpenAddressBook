@@ -121,42 +121,19 @@ class RetrieveSpiceworksCommand extends Command
      */
     private function addOrUpdate(ItemSpiceworksInterface $item, array $current_items, OutputInterface $output)
     {
+        $identifier = $item->getIdentifier();
+
         $output->writeln(sprintf(
             '<info>add or update "%s" (%s)</info>',
             $item->getName(),
-            $item->getIdentifier()
+            $identifier
         ));
 
-        $identifier = $item->getIdentifier();
-
-//        foreach ($current_items as $current_item) {
-//            if (isset($current_item['connector-identifier']) === false) {
-//                continue;
-//            }
-//
-//            if ($current_item['connector-identifier'] !== $identifier) {
-//                continue;
-//            }
-//
-//            $output->writeln(sprintf(
-//                '<comment>update "%s" (%s)</comment>',
-//                $item->getName(),
-//                $current_item['id']
-//            ));
-//
-//            $this->database
-//                ->useObjectId($current_item['id'])
-//                ->set(
-//                    $this->populateRedisItem($current_item, $item)
-//                )
-//            ;
-//            return;
-//        }
 
         $output->writeln(sprintf(
             '<comment>add "%s" (%s)</comment>',
             $item->getName(),
-            $item->getIdentifier()
+            $identifier
         ));
 
         $this->database
@@ -181,6 +158,8 @@ class RetrieveSpiceworksCommand extends Command
             'last_user' => $item->getLastUser(),
             'last_logon' => $item->getLastLogon(),
             'id' => $item->getId(),
+            'serial' => $item->getSerial(),
+            'model' => $item->getModel(),
             'connector-identifier' => $item->getIdentifier(),
         ];
 

@@ -18,6 +18,8 @@ class SpiceworksItem implements ItemSpiceworksInterface
     private $last_user;
     private $last_logon;
     private $identifier;
+    private $serial;
+    private $model;
 
     /**
      * @param array $data the Odoo request's datas
@@ -43,6 +45,8 @@ class SpiceworksItem implements ItemSpiceworksInterface
             3 => 'name',
             4 => 'last_user',
             5 => 'last_logon',
+            6 => 'serial',
+            7 => 'model',
         ];
 
         foreach ($relations as $spicework => $property) {
@@ -156,5 +160,23 @@ class SpiceworksItem implements ItemSpiceworksInterface
     public function getLastUser()
     {
         return $this->last_user;
+    }
+
+    /**
+     * Return the serial of the PC
+     * @return mixed
+     */
+    public function getSerial()
+    {
+        return $this->serial;
+    }
+
+    /**
+     * Return the model of the PC
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 }

@@ -24,6 +24,7 @@
         "symfony/yaml": "^3.0",
         "symfony/console": "^3.0",
         "leblanc-simon/openerpbyjsonrpc": "^1.0",
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "fabpot/goutte": "^3.2"
     }
 }

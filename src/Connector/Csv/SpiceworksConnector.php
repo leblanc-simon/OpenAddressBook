@@ -7,6 +7,8 @@
 
 namespace OpenAddressBook\Connector\Csv;
 
+use Goutte\Client;
+use GuzzleHttp\Cookie\CookieJar;
 use OpenAddressBook\Connector\ConnectorSpiceworksInterface;
 use OpenAddressBook\Connector\ItemSpiceworksInterface;
 use Symfony\Component\Yaml\Parser;
@@ -17,6 +19,11 @@ class SpiceworksConnector implements ConnectorSpiceworksInterface
      * @var string
      */
     private $settings_file;
+
+    /**
+     * @var string
+     */
+    private $filename;
 
     /**
      * @var resource
@@ -33,6 +40,7 @@ class SpiceworksConnector implements ConnectorSpiceworksInterface
         }
 
         $this->setSettingsFile($options['settings_file']);
+        $this->downloadFile();
         $this->openFile();
     }
 
@@ -53,21 +61,61 @@ class SpiceworksConnector implements ConnectorSpiceworksInterface
     }
 
     /**
-     * Openthe CSV file
+     * Download the CSV file
+     *
+     * @throws \RuntimeException
      */
-    private function openFile()
+    private function downloadFile()
     {
         $parameters = $this->getSettings();
 
-        $filename = __DIR__.'/../../../'.$parameters['file'];
-        if (false === file_exists($filename)) {
-            throw new \DomainException('file '.$parameters['file'].' odesn\'t exist');
+        $guzzle_client = new \GuzzleHttp\Client([
+            'cookies' => true,
+        ]);
+
+        $http_client = new Client();
+        $http_client->setClient($guzzle_client);
+
+        // Login
+        $crawler = $http_client->request('GET', $parameters['base_url'].$parameters['login_url']);
+        $form = $crawler->selectButton('Log in')->form();
+        $http_client->submit($form, [
+            'pro_user[email]' => $parameters['login'],
+            'pro_user[password]' => $parameters['password']
+        ]);
+
+        // Download CSV
+        $filename = tempnam(sys_get_temp_dir(), 'spiceworks');
+        $http_client->request(
+            'GET',
+            $parameters['base_url'].str_replace(
+                '%csv_id%',
+                $parameters['csv_id'],
+                $parameters['csv_url']
+            )
+        );
+
+        if (false === file_put_contents($filename, $http_client->getResponse()->getContent())) {
+            throw new \RuntimeException('Impossible to download CSV file');
         }
 
-        $this->fhandle = fopen($filename, 'rb');
+        $this->filename = $filename;
+    }
+
+
+    /**
+     * Open the CSV file
+     */
+    private function openFile()
+    {
+        if (false === file_exists($this->filename)) {
+            throw new \DomainException('file '.$this->filename.' odesn\'t exist');
+        }
+
+        $this->fhandle = fopen($this->filename, 'rb');
         if (false === $this->fhandle) {
             $this->fhandle = null;
-            throw new \DomainException('impossible to open file '.$parameters['file']);
+            throw new \DomainException('impossible to open file '.$this->filename);
         }
     }
 
@@ -108,7 +156,7 @@ class SpiceworksConnector implements ConnectorSpiceworksInterface
         }
 
         $parameters = $settings['spiceworks_csv'];
-        $required_settings = ['file'];
+        $required_settings = ['base_url', 'csv_url', 'csv_id', 'login_url', 'login', 'password'];
         foreach ($required_settings as $required_setting) {
             if (isset($parameters[$required_setting]) === false) {
                 throw new \RuntimeException(sprintf(

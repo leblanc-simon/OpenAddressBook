@@ -1,6 +1,7 @@
 /config/click2call.yml
 /config/command.yml
 /config/odoo.yml
+/config/spiceworks_csv.yml
 /vendor
 /web/js/config.js
 /web/.htaccess

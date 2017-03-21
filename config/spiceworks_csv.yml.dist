@@ -1,2 +1,7 @@
 spiceworks_csv:
-    file: data/spiceworks.csv
+    base_url: http://[url]
+    csv_url: /reports/show/%csv_id%/report-%csv_id%.csv
+    csv_id: [csv_id]
+    login_url: /pro_users/login
+    login: [email]
+    password: [password]

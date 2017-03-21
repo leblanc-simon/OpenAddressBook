@@ -50,4 +50,16 @@ interface ItemSpiceworksInterface
      * @return string
      */
     public function getLastLogon();
+
+    /**
+     * Return the serial
+     * @return mixed
+     */
+    public function getSerial();
+
+    /**
+     * Return the model
+     * @return mixed
+     */
+    public function getModel();
 }
