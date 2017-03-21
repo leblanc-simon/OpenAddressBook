@@ -8,7 +8,6 @@
 namespace OpenAddressBook\Connector\Csv;
 
 use Goutte\Client;
-use GuzzleHttp\Cookie\CookieJar;
 use OpenAddressBook\Connector\ConnectorSpiceworksInterface;
 use OpenAddressBook\Connector\ItemSpiceworksInterface;
 use Symfony\Component\Yaml\Parser;
@@ -167,5 +166,12 @@ class SpiceworksConnector implements ConnectorSpiceworksInterface
         }
 
         return $parameters;
+    }
+
+    public function __destruct()
+    {
+        if (true === file_exists($this->filename) && true === is_file($this->filename)) {
+            @unlink($this->filename);
+        }
     }
 }
