@@ -109,7 +109,7 @@ DELETE http://localhost/api/v1/address-books/1.json
 * http://phpjs.org/
 * http://blog.echarp.org/filterTable
 * https://github.com/filamentgroup/tablesaw
-* http://icomoon.io/
+* http://fontello.com/ and http://www.entypo.com/
 * http://tympanus.net/Development/CreativeButtons/
 
 ## License
