@@ -1,12 +1,13 @@
 @import "http://fonts.googleapis.com/css?family=Ubuntu:400,700";
 
 @font-face {
-    font-family: 'icomoon';
-    src:url('../fonts/icomoon.eot?jqignk');
-    src:url('../fonts/icomoon.eot?#iefixjqignk') format('embedded-opentype'),
-    url('../fonts/icomoon.woff?jqignk') format('woff'),
-    url('../fonts/icomoon.ttf?jqignk') format('truetype'),
-    url('../fonts/icomoon.svg?jqignk#icomoon') format('svg');
+    font-family: 'open-address-book';
+    src: url('../fonts/open-address-book.eot?62676593');
+    src: url('../fonts/open-address-book.eot?62676593#iefix') format('embedded-opentype'),
+    url('../fonts/open-address-book.woff2?62676593') format('woff2'),
+    url('../fonts/open-address-book.woff?62676593') format('woff'),
+    url('../fonts/open-address-book.ttf?62676593') format('truetype'),
+    url('../fonts/open-address-book.svg?62676593#open-address-book') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -306,8 +307,39 @@ table tbody tr:hover {
     display: none;
 }
 
+#add-proposal {
+    color: #74a942;
+    background-color: #def2de;
+    padding: 15px;
+    border: 1px solid #d1ebcc;
+    border-radius: 4px;
+    position: fixed;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: none;
+    z-index: 2;
+}
+
+#add-proposal .add-tel {
+    font-weight: bold;
+}
+
+#add-proposal span[class^="action-"] {
+    display: inline-block;
+    margin-right: 1.5rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+}
+
+#add-proposal .action-cancel {
+    opacity: 0.5;
+}
+#add-proposal .action-cancel:hover {
+    opacity: 1;
+}
+
 [class^="icon-"], [class*=" icon-"] {
-    font-family: 'icomoon';
+    font-family: 'open-address-book';
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -321,14 +353,22 @@ table tbody tr:hover {
 }
 
 .icon-pencil:before {
-    content: "\e600";
+    content: "\e801";
     font-size: 18px;
 }
 .icon-search:before {
-    content: "\e601";
+    content: "\e800";
 }
 .icon-remove:before {
-    content: "\e602";
+    content: "\e802";
+    font-size: 18px;
+}
+.icon-add:before {
+    content: "\e803";
+    font-size: 18px;
+}
+.icon-cancel:before {
+    content: "\e804";
     font-size: 18px;
 }
 

@@ -57,6 +57,44 @@ function convertToTel(tel)
     return tel.replace(/[^0-9\+]+/g, '');
 }
 
+function checkTelInCurrentTable(tel)
+{
+    tel = convertToTel(tel);
+    return $('i[data-tel="' + tel + '"]:not(.custom-phone)').length === 0;
+}
+
+function openNewForm(tel)
+{
+    var form = '';
+    $.each(allowed_datas, function(key, value) {
+        form += buildInput(key, '', value.label, value.type);
+    });
+
+    $('form .content').html(form);
+    $('form').attr('action', url_all);
+    $('.form').removeClass('hide');
+
+    if (tel) {
+        var is_mobile = /^0[67]/.test(tel);
+        if (
+            is_mobile
+            &&
+            ($('.form input[name="mobile"]').length > 0 || $('.form input[name="portable"]').length > 0)
+        ) {
+            if ($('.form input[name="mobile"]').length > 0) {
+                $('.form input[name="mobile"]').val(tel);
+            } else {
+                $('.form input[name="portable"]').val(tel);
+            }
+        } else if ($('.form input[name="phone"]').length > 0) {
+            $('.form input[name="phone"]').val(tel);
+        }
+    }
+
+    $('.form input:eq(0)').focus();
+    console.debug(form);
+}
+
 console.debug = (debug == true) ? console.log : function(){};
 
 function sprintf() {

@@ -114,17 +114,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.new', function(){
-        var form = '';
-        $.each(allowed_datas, function(key, value) {
-            form += buildInput(key, '', value.label, value.type);
-        });
-
-        $('form .content').html(form);
-        $('form').attr('action', url_all);
-        $('.form').removeClass('hide');
-        $('.form input:eq(0)').focus();
-        console.debug(form);
-
+        openNewForm();
         return false;
     });
 
@@ -199,7 +189,7 @@ $(document).ready(function() {
 
     // Escape : clear search
     $(document).on('keypress', 'input[type=search]', function(e){
-        if (e.keyCode == 27) { // 27 : ESC
+        if (e.keyCode === 27) { // 27 : ESC
             $(this).val('');
             $(this).keyup();
         }
@@ -236,16 +226,32 @@ $(document).ready(function() {
             }
         });
 
+        $(document).on('click', '.action-cancel', function(){
+            $('#add-proposal').slideUp('slow');
+        });
+
+        $(document).on('click', '.action-add', function(){
+            var phone_number = $('#add-proposal .add-tel').html();
+            $('#add-proposal').slideUp('slow');
+            openNewForm(phone_number);
+        });
+
         var clear_custom_phone = false;
         $(document).on('click', '.custom-phone', function(){
-            var phone_number = document.getElementById('custom-call').getElementsByTagName('input')[0].value;
-            phone_number = convertToTel(phone_number);
+            var custom_phone_number = document.getElementById('custom-call').getElementsByTagName('input')[0].value;
+            phone_number = convertToTel(custom_phone_number);
             if (!phone_number) {
                 return false;
             }
 
             $(this).attr('data-tel', phone_number);
             clear_custom_phone = true;
+
+            if (true === checkTelInCurrentTable(phone_number)) {
+                var $add_proposal = $('#add-proposal');
+                $add_proposal.find('.add-tel').html(custom_phone_number);
+                $add_proposal.slideDown('slow');
+            }
 
             return true;
         });
