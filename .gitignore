@@ -1,6 +1,6 @@
 /config/click2call.yml
+/config/click2call-*.yml
 /config/command.yml
 /config/odoo.yml
 /vendor
 /web/js/config.js
-/web/.htaccess

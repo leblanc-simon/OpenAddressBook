@@ -66,6 +66,15 @@ To connect OpenAddressBook and another external source
 You can show the ```\OpenAddressBook\Connector\Odoo\Connector``` and ```\OpenAddressBook\Connector\Odoo\Item``` 
 classes for inspiration.
 
+### Manage multiple databases
+
+If you want use OpenAddressBook with multiple databases, you can use environment variable `OAB_BD_NAME` :
+
+* Set environment variable in your PHP-FPM configuration
+* Or set environment variable in your Apache configuration
+* if you use Click2Call, name your parameter file with the `OAB_BD_NAME`, example :
+    * with `OAB_BD_NAME` equals `otherdb`
+    * name the parameter file `config/click2call-otherdb.yml`
 
 ## API
 
