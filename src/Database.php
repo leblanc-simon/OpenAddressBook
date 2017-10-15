@@ -11,13 +11,17 @@ use Predis\Client;
 
 class Database
 {
+    const DATABASE_PREFIX_NAME = 'OpenAddressBook-';
+
     private $client;
     private $object_name = null;
     private $object_id = null;
+    private $database_name = null;
 
     public function __construct($options = [])
     {
         $this->client = new Client($options);
+        $this->initDatabaseName();
     }
 
 
@@ -63,7 +67,7 @@ class Database
 
     public function getAll()
     {
-        $ids = $this->client->lrange('OpenAddressBook-'.$this->object_name.'-ids', 0, -1);
+        $ids = $this->client->lrange($this->database_name.$this->object_name.'-ids', 0, -1);
         if (false === is_array($ids)) {
             return [];
         }
@@ -98,17 +102,31 @@ class Database
             throw new \Exception('id and name must be initialize');
         }
 
-        return 'OpenAddressBook-'.$this->object_name.'_'.$this->object_id;
+        return $this->database_name.$this->object_name.'_'.$this->object_id;
     }
 
 
     private function reserveNextId()
     {
-        $key = 'OpenAddressBook-'.$this->object_name.'-id';
+        $key = $this->database_name.$this->object_name.'-id';
         $id = $this->client->incr($key);
 
         $this->client->rpush($key.'s', $id);
 
         return $id;
+    }
+
+    private function initDatabaseName()
+    {
+        $this->database_name = self::DATABASE_PREFIX_NAME;
+
+        $db_name = getenv('OAB_DB_NAME', true);
+        if (false === $db_name) {
+            $db_name = getenv('OAB_BD_NAME');
+        }
+
+        if (false === empty($db_name)) {
+            $this->database_name .= $db_name.'-';
+        }
     }
 }

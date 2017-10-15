@@ -63,7 +63,7 @@ class Click2Call extends Controller
         static $parameters = null;
 
         if (null === $parameters) {
-            $filename = __DIR__.'/../../config/click2call.yml';
+            $filename = $this->getClick2CallFilename();
             if (is_file($filename) === false) {
                 return false;
             }
@@ -79,5 +79,22 @@ class Click2Call extends Controller
         }
 
         return $parameters['click2call'];
+    }
+
+    /**
+     * @return string
+     */
+    private function getClick2CallFilename()
+    {
+        $db_name = getenv('OAB_DB_NAME', true);
+        if (false === $db_name) {
+            $db_name = getenv('OAB_BD_NAME');
+        }
+
+        if (false === empty($db_name)) {
+            $db_name = '-'.$db_name;
+        }
+
+        return __DIR__.'/../../config/click2call'.$db_name.'.yml';
     }
 }
